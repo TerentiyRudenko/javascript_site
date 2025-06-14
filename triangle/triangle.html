@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Калькулятор прямокутного трикутника</title>
+  <link rel="stylesheet" href="triangle.css">
+</head>
+<body>
+
+  <div class="container">
+    <h2>🔺 Калькулятор прямокутного трикутника</h2>
+
+    <label for="a">Катет a (см):</label>
+    <input type="number" id="a" step="any" placeholder="Введіть значення a">
+
+    <label for="b">Катет b (см):</label>
+    <input type="number" id="b" step="any" placeholder="Введіть значення b">
+
+    <label for="c">Гіпотенуза c (см):</label>
+    <input type="number" id="c" step="any" placeholder="Введіть значення c">
+
+    <button onclick="calculate()">Розрахувати</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function calculate() {
+      const aInput = document.getElementById("a").value.trim();
+      const bInput = document.getElementById("b").value.trim();
+      const cInput = document.getElementById("c").value.trim();
+      const resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = "";
+
+      const aVal = aInput !== "" ? parseFloat(aInput) : NaN;
+      const bVal = bInput !== "" ? parseFloat(bInput) : NaN;
+      const cVal = cInput !== "" ? parseFloat(cInput) : NaN;
+
+      const isValidA = !isNaN(aVal) && aVal > 0;
+      const isValidB = !isNaN(bVal) && bVal > 0;
+      const isValidC = !isNaN(cVal) && cVal > 0;
+
+      const provided = [isValidA, isValidB, isValidC].filter(Boolean).length;
+
+      if (provided < 2) {
+        resultDiv.innerHTML = "<div class='error'>Введіть щонайменше дві сторони.</div>";
+        return;
+      }
+
+      let a = isValidA ? aVal : NaN;
+      let b = isValidB ? bVal : NaN;
+      let c = isValidC ? cVal : NaN;
+
+      if (provided === 3) {
+        let sides = [a, b, c].sort((x, y) => x - y);
+        if (Math.abs(sides[0] ** 2 + sides[1] ** 2 - sides[2] ** 2) > 1e-4) {
+          resultDiv.innerHTML = "<div class='error'>Ці сторони не утворюють прямокутний трикутник.</div>";
+          return;
+        }
+      } else if (!isValidC) {
+        c = Math.sqrt(a ** 2 + b ** 2);
+      } else if (!isValidA) {
+        if (c <= b) {
+          resultDiv.innerHTML = "<div class='error'>Гіпотенуза має бути більшою за катет.</div>";
+          return;
+        }
+        a = Math.sqrt(c ** 2 - b ** 2);
+      } else if (!isValidB) {
+        if (c <= a) {
+          resultDiv.innerHTML = "<div class='error'>Гіпотенуза має бути більшою за катет.</div>";
+          return;
+        }
+        b = Math.sqrt(c ** 2 - a ** 2);
+      }
+
+      const area = 0.5 * a * b;
+      const perimeter = a + b + c;
+
+      resultDiv.innerHTML = `
+        <div class="result-box">
+          <h3>✅ Результати</h3>
+          <p><strong>Катет a:</strong> ${a.toFixed(2)} см</p>
+          <p><strong>Катет b:</strong> ${b.toFixed(2)} см</p>
+          <p><strong>Гіпотенуза c:</strong> ${c.toFixed(2)} см</p>
+          <hr>
+          <p><strong>📐 Площа:</strong> ${area.toFixed(2)} см²</p>
+          <p><strong>📏 Периметр:</strong> ${perimeter.toFixed(2)} см</p>
+        </div>
+      `;
+    }
+  </script>
+
+</body>
+</html>

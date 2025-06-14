@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Угадай число</title>
+  <link rel="stylesheet" href="guess.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🎯 Вгадай число!</h1>
+
+    <div id="range-inputs">
+      <p>Виберіть діапазон:</p>
+      <input type="number" id="min" placeholder="від">
+      <input type="number" id="max" placeholder="до">
+      <button onclick="startGame()">Почати гру</button>
+    </div>
+
+    <div id="game" style="display:none;">
+      <p>Вгадайте число між <span id="minDisplay"></span> і <span id="maxDisplay"></span></p>
+      <input type="number" id="guessInput" placeholder="Ваша спроба">
+      <button onclick="checkGuess()">Перевірити</button>
+      <p id="feedback"></p>
+      <p>Кількість спроб: <span id="attempts">0</span></p>
+      <button onclick="location.reload()">Грати ще раз</button>
+    </div>
+  </div>
+
+  <script>
+    let secretNumber;
+    let attempts = 0;
+    let min, max;
+
+    function startGame() {
+      min = parseInt(document.getElementById("min").value);
+      max = parseInt(document.getElementById("max").value);
+
+      if (isNaN(min) || isNaN(max) || min >= max) {
+        alert("Будь ласка, введіть коректний діапазон (мін < макс)");
+        return;
+      }
+
+      secretNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+      document.getElementById("minDisplay").textContent = min;
+      document.getElementById("maxDisplay").textContent = max;
+
+      document.getElementById("range-inputs").style.display = "none";
+      document.getElementById("game").style.display = "block";
+    }
+
+    function checkGuess() {
+      const guess = parseInt(document.getElementById("guessInput").value);
+      if (isNaN(guess)) {
+        document.getElementById("feedback").textContent = "Введіть число!";
+        return;
+      }
+
+      attempts++;
+      document.getElementById("attempts").textContent = attempts;
+
+      if (guess < secretNumber) {
+        document.getElementById("feedback").textContent = "Занадто маленьке!";
+      } else if (guess > secretNumber) {
+        document.getElementById("feedback").textContent = "Занадто велике!";
+      } else {
+        document.getElementById("feedback").textContent = `🎉 Правильно! Загадане число: ${secretNumber}`;
+      }
+    }
+  </script>
+</body>
+</html>

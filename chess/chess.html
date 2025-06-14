@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Шахівниця</title>
+  <link rel="stylesheet" href="chess.css">
+</head>
+<body>
+  <h1>Шахівниця</h1>
+  <canvas id="chessCanvas" width="400" height="400"></canvas>
+
+  <script>
+    const boardSize = 8;
+    const cellSize = 50;
+    const chessCanvas = document.getElementById('chessCanvas');
+    const chessCtx = chessCanvas.getContext('2d');
+
+    function drawChessBoard() {
+      for (let row = 0; row < boardSize; row++) {
+        for (let col = 0; col < boardSize; col++) {
+          const isLight = (row + col) % 2 === 0;
+          chessCtx.fillStyle = isLight ? '#fff' : '#555';
+          chessCtx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
+        }
+      }
+    }
+
+    drawChessBoard();
+  </script>
+</body>
+</html>

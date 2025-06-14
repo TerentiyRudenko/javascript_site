@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Банкомат</title>
+  <link rel="stylesheet" href="atm.css">
+</head>
+<body>
+
+  <div class="atm">
+    <h2>Банкомат</h2>
+
+    <label for="initialBalance">Оберіть початковий баланс:</label>
+    <input type="number" id="initialBalance" placeholder="до 1 000 000 грн" max="1000000">
+    <button onclick="setBalance()">Встановити баланс</button>
+
+    <p id="balanceSection" style="display:none;">
+      Поточний баланс: <span id="balance">0</span> грн
+    </p>
+
+    <input type="number" id="amount" placeholder="Сума для зняття" disabled>
+    <button onclick="withdraw()" id="withdrawBtn" disabled>Зняти</button>
+
+    <div class="message" id="message"></div>
+  </div>
+
+  <script>
+    let balance = 0;
+    const allowedBills = [5, 10, 20, 50, 100, 200, 500, 1000];
+
+    function setBalance() {
+      const input = document.getElementById('initialBalance');
+      const val = parseInt(input.value);
+
+      if (isNaN(val) || val <= 0 || val > 1000000) {
+        alert("Введіть коректний баланс до 1 000 000 грн");
+        return;
+      }
+
+      balance = val;
+      document.getElementById('balance').textContent = balance.toFixed(2);
+      document.getElementById('balanceSection').style.display = "block";
+      document.getElementById('amount').disabled = false;
+      document.getElementById('withdrawBtn').disabled = false;
+      document.getElementById('message').textContent = "";
+    }
+
+    function withdraw() {
+      const amountInput = document.getElementById("amount");
+      const amount = parseInt(amountInput.value);
+      const message = document.getElementById("message");
+
+      if (isNaN(amount) || amount <= 0) {
+        message.textContent = "Введіть коректну суму.";
+        message.style.color = "red";
+        return;
+      }
+
+      if (!isWithdrawable(amount)) {
+        message.textContent = "Неможливо видати таку суму цими купюрами.";
+        message.style.color = "red";
+        return;
+      }
+
+      if (amount > balance) {
+        message.textContent = "Недостатньо коштів.";
+        message.style.color = "red";
+        return;
+      }
+
+      balance -= amount;
+      document.getElementById("balance").textContent = balance.toFixed(2);
+      message.textContent = `Успішно знято ${amount} грн`;
+      message.style.color = "green";
+      amountInput.value = "";
+    }
+
+    function isWithdrawable(amount) {
+      // Алгоритм жадібного знімання купюрами
+      let remaining = amount;
+      for (let i = allowedBills.length - 1; i >= 0; i--) {
+        const bill = allowedBills[i];
+        const count = Math.floor(remaining / bill);
+        remaining -= count * bill;
+      }
+      return remaining === 0;
+    }
+  </script>
+
+</body>
+</html>

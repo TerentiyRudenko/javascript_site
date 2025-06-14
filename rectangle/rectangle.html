@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Розрахунок прямокутника</title>
+  <link rel="stylesheet" href="rectangle.css">
+</head>
+<body>
+
+  <div class="container">
+    <h2>Розрахунок площі та периметра прямокутника</h2>
+
+    <label for="length">Довжина (см):</label>
+    <input type="number" id="length" placeholder="Введіть довжину" min="0">
+
+    <label for="width">Ширина (см):</label>
+    <input type="number" id="width" placeholder="Введіть ширину" min="0">
+
+    <button onclick="calculate()">Обчислити</button>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function calculate() {
+      const length = parseFloat(document.getElementById("length").value);
+      const width = parseFloat(document.getElementById("width").value);
+      const resultDiv = document.getElementById("result");
+
+      if (isNaN(length) || isNaN(width) || length <= 0 || width <= 0) {
+        resultDiv.innerHTML = "<span class='error'>Будь ласка, введіть коректні значення.</span>";
+        return;
+      }
+
+      const area = length * width;
+      const perimeter = 2 * (length + width);
+
+      resultDiv.innerHTML = `
+        <p>📐 Площа: <strong>${area.toFixed(2)} см²</strong></p>
+        <p>📏 Периметр: <strong>${perimeter.toFixed(2)} см</strong></p>
+      `;
+    }
+  </script>
+
+</body>
+</html>

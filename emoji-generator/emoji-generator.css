@@ -1,0 +1,72 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(to right, #fce4ec, #e3f2fd);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 20px;
+  color: #4a148c;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+select, input, button {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 2px solid #ce93d8;
+}
+
+button {
+  background-color: #ab47bc;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #8e24aa;
+}
+
+.emoji-output {
+  margin-top: 20px;
+  font-size: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.emoji {
+  transition: transform 0.2s;
+}
+
+.emoji:hover {
+  transform: scale(1.4) rotate(10deg);
+}
+
+.error {
+  color: #c62828;
+  font-weight: bold;
+}

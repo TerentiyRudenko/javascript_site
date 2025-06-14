@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Кольорові кола</title>
+  <link rel="stylesheet" href="circles.css">
+</head>
+<body>
+  <h1>Кольорові кола</h1>
+
+  <div>
+    <input id="circleCount" type="number" placeholder="Кількість кіл" min="1">
+    <button onclick="drawCirclesFromInput()">Малювати</button>
+  </div>
+
+  <canvas id="circleCanvas" width="400" height="400"></canvas>
+
+  <script>
+    const circleCanvas = document.getElementById('circleCanvas');
+    const circleCtx = circleCanvas.getContext('2d');
+    const canvasSize = 400;
+
+    function getRandomColor() {
+      return `hsl(${Math.random() * 360}, 70%, 60%)`;
+    }
+
+    function drawCircles(count) {
+      const radius = 30;
+      const padding = radius + 5;
+
+      circleCtx.clearRect(0, 0, canvasSize, canvasSize);
+
+      for (let i = 0; i < count; i++) {
+        const x = Math.random() * (canvasSize - 2 * padding) + padding;
+        const y = Math.random() * (canvasSize - 2 * padding) + padding;
+
+        circleCtx.beginPath();
+        circleCtx.arc(x, y, radius, 0, Math.PI * 2);
+        circleCtx.fillStyle = getRandomColor();
+        circleCtx.strokeStyle = getRandomColor();
+        circleCtx.lineWidth = 4;
+        circleCtx.fill();
+        circleCtx.stroke();
+      }
+    }
+
+    function drawCirclesFromInput() {
+      const count = parseInt(document.getElementById("circleCount").value);
+      if (isNaN(count) || count < 1) {
+        alert("Введіть правильну кількість кіл");
+        return;
+      }
+      drawCircles(count);
+    }
+  </script>
+</body>
+</html>

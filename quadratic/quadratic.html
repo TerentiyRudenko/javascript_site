@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Квадратне рівняння</title>
+  <link rel="stylesheet" href="quadratic.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Розв’язання квадратного рівняння</h1>
+
+    <input type="number" id="a" placeholder="a"> x² +
+    <input type="number" id="b" placeholder="b"> x +
+    <input type="number" id="c" placeholder="c"> = 0
+    <br><br>
+    <button onclick="solveQuadratic()">Обчислити</button>
+
+    <p id="calculation"></p>
+    <p id="result"></p>
+  </div>
+
+  <script>
+    function solveQuadratic() {
+      const a = parseFloat(document.getElementById('a').value);
+      const b = parseFloat(document.getElementById('b').value);
+      const c = parseFloat(document.getElementById('c').value);
+      const calcEl = document.getElementById('calculation');
+      const resultEl = document.getElementById('result');
+
+      if (isNaN(a) || isNaN(b) || isNaN(c)) {
+        calcEl.textContent = '';
+        resultEl.textContent = 'Введіть всі коефіцієнти.';
+        return;
+      }
+
+      if (a === 0) {
+        resultEl.textContent = 'Це не квадратне рівняння (a ≠ 0).';
+        calcEl.textContent = '';
+        return;
+      }
+
+      const D = b * b - 4 * a * c;
+      calcEl.textContent = `D = ${b}² - 4×${a}×${c} = ${D}`;
+
+      if (D > 0) {
+        const x1 = (-b + Math.sqrt(D)) / (2 * a);
+        const x2 = (-b - Math.sqrt(D)) / (2 * a);
+        resultEl.textContent = `Два корені: x₁ = ${x1.toFixed(2)}, x₂ = ${x2.toFixed(2)}`;
+      } else if (D === 0) {
+        const x = -b / (2 * a);
+        resultEl.textContent = `Один корінь: x = ${x.toFixed(2)}`;
+      } else {
+        resultEl.textContent = 'Рівняння не має дійсних коренів (D < 0)';
+      }
+    }
+  </script>
+</body>
+</html>

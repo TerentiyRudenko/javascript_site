@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Країни та населення</title>
+  <link rel="stylesheet" href="searching.css">
+</head>
+<body>
+  <h1>Список країн</h1>
+
+  <div class="buttons">
+    <button onclick="findMostPopulated()">Найбільше населення</button>
+    <button onclick="findLeastPopulated()">Найменше населення</button>
+    <button onclick="sortByName()">Сортувати за алфавітом</button>
+    <button onclick="sortByPopulation()">Сортувати за населенням</button>
+  </div>
+
+  <ul id="countryList"></ul>
+
+  <script>
+    const countries = [
+      { name: "Україна", population: 37000000 },
+      { name: "Китай", population: 1400000000 },
+      { name: "США", population: 331000000 },
+      { name: "Ісландія", population: 370000 },
+      { name: "Індія", population: 1390000000 },
+      { name: "Німеччина", population: 83000000 },
+      { name: "Франція", population: 67000000 },
+      { name: "Італія", population: 60000000 },
+      { name: "Індонезія", population: 273000000 },
+      { name: "Бразилія", population: 212000000 },
+      { name: "Японія", population: 125000000 },
+      { name: "Канада", population: 38000000 },
+      { name: "Австралія", population: 25600000 },
+      { name: "Єгипет", population: 104000000 },
+      { name: "Нігерія", population: 213000000 }
+    ];
+
+    function displayCountries(list) {
+      const ul = document.getElementById("countryList");
+      ul.innerHTML = "";
+      list.forEach(country => {
+        const li = document.createElement("li");
+        li.textContent = `${country.name} — ${country.population.toLocaleString('uk-UA')} осіб`;
+        ul.appendChild(li);
+      });
+    }
+
+    function findMostPopulated() {
+      const most = countries.reduce((max, country) => country.population > max.population ? country : max);
+      alert(`Країна з найбільшим населенням: ${most.name} (${most.population.toLocaleString('uk-UA')} осіб)`);
+    }
+
+    function findLeastPopulated() {
+      const least = countries.reduce((min, country) => country.population < min.population ? country : min);
+      alert(`Країна з найменшим населенням: ${least.name} (${least.population.toLocaleString('uk-UA')} осіб)`);
+    }
+
+    function sortByName() {
+      const sorted = [...countries].sort((a, b) => a.name.localeCompare(b.name));
+      displayCountries(sorted);
+    }
+
+    function sortByPopulation() {
+      const sorted = [...countries].sort((a, b) => b.population - a.population);
+      displayCountries(sorted);
+    }
+
+    displayCountries(countries);
+  </script>
+</body>
+</html>

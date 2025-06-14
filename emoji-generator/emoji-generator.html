@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Генератор Емодзі</title>
+  <link rel="stylesheet" href="emoji-generator.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🎉 Генератор емодзі</h1>
+
+    <div class="controls">
+      <label for="emojiSelect">Оберіть емодзі:</label>
+      <select id="emojiSelect">
+        <option value="😀">😀 Усмішка</option>
+        <option value="🎉">🎉 Святкування</option>
+        <option value="🔥">🔥 Вогонь</option>
+        <option value="❤️">❤️ Серце</option>
+        <option value="🌟">🌟 Зірка</option>
+        <option value="🐱">🐱 Кіт</option>
+        <option value="🚀">🚀 Ракета</option>
+      </select>
+
+      <input type="number" id="countInput" placeholder="Кількість" min="1" max="100">
+      <button onclick="generateEmojis()">Показати</button>
+    </div>
+
+    <div id="result" class="emoji-output"></div>
+  </div>
+
+  <script>
+    function generateEmojis() {
+      const emoji = document.getElementById("emojiSelect").value;
+      const count = parseInt(document.getElementById("countInput").value);
+      const resultDiv = document.getElementById("result");
+
+      if (isNaN(count) || count < 1 || count > 100) {
+        resultDiv.innerHTML = `<p class="error">❗ Введіть кількість від 1 до 100.</p>`;
+        return;
+      }
+
+      let output = "";
+      for (let i = 0; i < count; i++) {
+        output += `<span class="emoji">${emoji}</span>`;
+      }
+
+      resultDiv.innerHTML = output;
+    }
+  </script>
+</body>
+</html>

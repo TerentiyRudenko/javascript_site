@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Інформація про дату</title>
+  <link rel="stylesheet" href="dateinfo.css">
+</head>
+<body>
+  <h1>Дата та пора року</h1>
+
+  <div class="input-group">
+    <label for="month">Номер місяця (1–12):</label>
+    <input type="number" id="month" min="1" max="12">
+  </div>
+
+  <div class="input-group">
+    <label for="day">Число (необов'язково):</label>
+    <input type="number" id="day" min="1" max="31">
+  </div>
+
+  <button onclick="getDateInfo()">Показати інформацію</button>
+
+  <div id="result"></div>
+
+  <script>
+    function getDateInfo() {
+      const month = parseInt(document.getElementById('month').value);
+      const day = parseInt(document.getElementById('day').value);
+      const result = document.getElementById('result');
+
+      const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      const seasons = ['зима', 'весна', 'літо', 'осінь'];
+      const seasonByMonth = [
+        'зима', 'зима',   // січень, лютий
+        'весна', 'весна', 'весна', // березень-квітень-травень
+        'літо', 'літо', 'літо',   // червень-серпень
+        'осінь', 'осінь', 'осінь', // вересень-листопад
+        'зима'                    // грудень
+      ];
+
+      if (isNaN(month) || month < 1 || month > 12) {
+        result.innerHTML = `<p class="error">Введіть коректний номер місяця (1–12).</p>`;
+        return;
+      }
+
+      const season = seasonByMonth[month - 1];
+
+      if (!isNaN(day)) {
+        if (day < 1 || day > daysInMonth[month - 1]) {
+          result.innerHTML = `<p class="error">Число некоректне для місяця.</p>`;
+          return;
+        }
+
+        let dayOfYear = 0;
+        for (let i = 0; i < month - 1; i++) {
+          dayOfYear += daysInMonth[i];
+        }
+        dayOfYear += day;
+
+        result.innerHTML = `
+          <p><strong>Дата:</strong> ${day}.${month}</p>
+          <p><strong>Пора року:</strong> ${season}</p>
+          <p><strong>День у році:</strong> ${dayOfYear}</p>
+          <p><strong>Місяць №:</strong> ${month}</p>
+          <p><strong>Число:</strong> ${day}</p>
+        `;
+      } else {
+        result.innerHTML = `<p><strong>Пора року:</strong> ${season}</p>`;
+      }
+    }
+  </script>
+</body>
+</html>

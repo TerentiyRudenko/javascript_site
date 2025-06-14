@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Аналіз числа</title>
+  <link rel="stylesheet" href="number-analysis.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🔍 Аналіз числа</h1>
+
+    <div class="input-group">
+      <input type="number" id="numberInput" placeholder="Введіть число">
+      <button onclick="analyzeNumber()">Аналізувати</button>
+    </div>
+
+    <div id="result" class="card hidden"></div>
+  </div>
+
+  <script>
+    function analyzeNumber() {
+      const input = document.getElementById("numberInput").value.trim();
+      const number = Number(input);
+      const result = document.getElementById("result");
+
+      if (input === "" || isNaN(number)) {
+        result.innerHTML = `<p class="error">❗ Введіть коректне число.</p>`;
+        result.classList.remove("hidden");
+        return;
+      }
+
+      const isEven = number % 2 === 0 ? "парне" : "непарне";
+
+      let sign = "нуль";
+      if (number > 0) sign = "додатне";
+      else if (number < 0) sign = "від’ємне";
+
+      const digits = Math.abs(number).toString().replace(".", "").length;
+      const sumOfDigits = Math.abs(number).toString().replace(".", "").split("").reduce((sum, d) => sum + +d, 0);
+
+      let isPrime = "недоступно";
+      if (Number.isInteger(number) && number > 1) {
+        isPrime = "просте";
+        for (let i = 2; i <= Math.sqrt(number); i++) {
+          if (number % i === 0) {
+            isPrime = "не є простим";
+            break;
+          }
+        }
+      }
+
+      result.innerHTML = `
+        <h2>Результат:</h2>
+        <ul>
+          <li><strong>Число:</strong> ${number}</li>
+          <li><strong>Парність:</strong> ${isEven}</li>
+          <li><strong>Знак:</strong> ${sign}</li>
+          <li><strong>Кількість цифр:</strong> ${digits}</li>
+          <li><strong>Сума цифр:</strong> ${sumOfDigits}</li>
+          <li><strong>Просте:</strong> ${isPrime}</li>
+        </ul>
+      `;
+      result.classList.remove("hidden");
+    }
+  </script>
+</body>
+</html>

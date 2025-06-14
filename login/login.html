@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Simple Login with Registration</title>
+  <link rel="stylesheet" href="login.css" />
+</head>
+<body>
+
+  <div class="container" id="login-container">
+    <h2>Login to your account</h2>
+
+    <label for="username">Username:</label>
+    <input type="text" id="username" placeholder="Enter username" />
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" placeholder="Enter password" />
+
+    <button onclick="login()">Login</button>
+
+    <p id="error" class="error"></p>
+  </div>
+
+  <div class="container" id="register-container" style="display:none;">
+    <h2>Register new user: <span id="new-username"></span></h2>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" placeholder="Enter your email" />
+
+    <label for="role">Role:</label>
+    <input type="text" id="role" placeholder="Enter your role (e.g. User)" />
+
+    <label for="age">Age:</label>
+    <input type="number" id="age" min="0" placeholder="Enter your age" />
+
+    <button onclick="register()">Complete Registration</button>
+
+    <p id="register-error" class="error"></p>
+  </div>
+
+  <div class="container" id="welcome-container" style="display:none;">
+    <h2>Welcome, <span id="user-name"></span>!</h2>
+    <p>Here's some info about you:</p>
+    <ul id="user-info"></ul>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    const users = {
+      "john": {
+        password: "1234",
+        info: {
+          email: "john@example.com",
+          role: "Administrator",
+          age: 29
+        }
+      },
+      "jane": {
+        password: "abcd",
+        info: {
+          email: "jane@example.com",
+          role: "User",
+          age: 25
+        }
+      }
+    };
+
+    let currentNewUser = null; // временно хранит имя нового пользователя
+    let currentNewPassword = null;
+
+    function login() {
+      const usernameInput = document.getElementById("username").value.trim().toLowerCase();
+      const passwordInput = document.getElementById("password").value;
+      const errorP = document.getElementById("error");
+      errorP.textContent = "";
+
+      if (!usernameInput || !passwordInput) {
+        errorP.textContent = "Please enter username and password.";
+        return;
+      }
+
+      const user = users[usernameInput];
+
+      if (!user) {
+        // Новый пользователь — показать форму регистрации
+        currentNewUser = usernameInput;
+        currentNewPassword = passwordInput;
+
+        document.getElementById("login-container").style.display = "none";
+        document.getElementById("register-container").style.display = "block";
+        document.getElementById("new-username").textContent = currentNewUser;
+        return;
+      }
+
+      if (user.password !== passwordInput) {
+        errorP.textContent = "Incorrect password.";
+        return;
+      }
+
+      // Успешный вход
+      showWelcome(usernameInput);
+    }
+
+    function register() {
+      const emailInput = document.getElementById("email").value.trim();
+      const roleInput = document.getElementById("role").value.trim();
+      const ageInput = document.getElementById("age").value.trim();
+      const errorP = document.getElementById("register-error");
+      errorP.textContent = "";
+
+      if (!emailInput || !roleInput || !ageInput) {
+        errorP.textContent = "Please fill in all fields.";
+        return;
+      }
+
+      if (isNaN(ageInput) || Number(ageInput) < 0) {
+        errorP.textContent = "Please enter a valid age.";
+        return;
+      }
+
+      users[currentNewUser] = {
+        password: currentNewPassword,
+        info: {
+          email: emailInput,
+          role: roleInput,
+          age: Number(ageInput)
+        }
+      };
+
+      alert("You have successfully registered!");
+
+      // Очистить форму регистрации
+      document.getElementById("email").value = "";
+      document.getElementById("role").value = "";
+      document.getElementById("age").value = "";
+
+      showWelcome(currentNewUser);
+
+      // Сброс временных данных
+      currentNewUser = null;
+      currentNewPassword = null;
+    }
+
+    function showWelcome(username) {
+      document.getElementById("login-container").style.display = "none";
+      document.getElementById("register-container").style.display = "none";
+      document.getElementById("welcome-container").style.display = "block";
+      document.getElementById("user-name").textContent = username;
+
+      const userInfoUl = document.getElementById("user-info");
+      userInfoUl.innerHTML = "";
+
+      const user = users[username];
+      for (const [key, value] of Object.entries(user.info)) {
+        const li = document.createElement("li");
+        li.textContent = `${capitalizeFirstLetter(key)}: ${value}`;
+        userInfoUl.appendChild(li);
+      }
+    }
+
+    function logout() {
+      document.getElementById("login-container").style.display = "block";
+      document.getElementById("register-container").style.display = "none";
+      document.getElementById("welcome-container").style.display = "none";
+
+      document.getElementById("username").value = "";
+      document.getElementById("password").value = "";
+      document.getElementById("error").textContent = "";
+      document.getElementById("register-error").textContent = "";
+    }
+
+    function capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+  </script>
+</body>
+</html>

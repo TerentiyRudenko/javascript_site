@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Портфоліо — Terentiy</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+    <h1>👨‍💻 Terentiy's Portfolio</h1>
+    <p>I am Terentiy — a web developer in progress 💡</p>
+  </header>
+
+  <section id="about">
+    <h2>🧠 About Me</h2>
+    <div class="about-content">
+      <img src="capybara.png" alt="My photo" class="profile-photo">
+      <p>
+        I enjoy programming and creating interactive web projects.<br>
+        I am still learning, but already have real projects to show.<br>
+        I am passionate about front-end development and web design.<br>
+        I very wanted to paste capybara here, so just enjoy this photo<br>
+        
+      </p>
+    </div>
+  </section>
+
+
+  <section id="technologies">
+    <h2 class="tech-label">🛠 Technologies I used</h2>
+    <ul class="tech-list">
+      <li><span class="badge html">HTML</span></li>
+      <li><span class="badge css">CSS</span></li>
+      <li><span class="badge js">JavaScript</span></li>
+    </ul>
+  </section>
+
+  <section id="projects">
+    <h2>🚀 My Projects</h2>
+    <div class="project-buttons" id="projectButtons"></div>
+  </section>
+
+  <script>
+    const projects = [
+      { name: "ATM Simulator", link: "../atm/atm.html" },
+      { name: "Login System", link: "../login/login.html" },
+      { name: "Rectangle Area and Perimeter", link: "../rectangle/rectangle.html" },
+      { name: "Country Population Search", link: "../searching/searching.html" },
+      { name: "Triangle Calculator", link: "../triangle/triangle.html" },
+      { name: "Chessboard", link: "../chess/chess.html" },
+      { name: "Circle Drawing", link: "../circles/circles.html" },
+      { name: "Grade Level Determination", link: "../grade/grade.html" },
+      { name: "Compliments Generator", link: "../compliments/compliments.html" },
+      { name: "Quadratic Equation Solver", link: "../quadratic/quadratic.html" },
+      { name: "Guess the Number", link: "../guess/guess.html" },
+      { name: "Factorial Calculator", link: "../factorial/factorial.html" },
+      { name: "Date Information", link: "../dateinfo/dateinfo.html" },
+      { name: "Number Analysis", link: "../number-analysis/number-analysis.html" },
+      { name: "Emoji Generator", link: "../emoji-generator/emoji-generator.html" },
+    ];
+
+    const container = document.getElementById("projectButtons");
+
+    projects.forEach(project => {
+      const btn = document.createElement("a");
+      btn.href = project.link;
+      btn.textContent = project.name;
+      btn.target = "_blank";
+      btn.className = "project-btn";
+      container.appendChild(btn);
+    });
+  </script>
+</body>
+
+</html>

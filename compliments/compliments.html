@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Compliments Generator</title>
+  <link rel="stylesheet" href="compliments.css">
+</head>
+<body>
+  <h1>✨ How many compliments do you want? ✨</h1>
+  <input id="count" type="number" min="1" placeholder="Enter a number" />
+  <div class="buttons">
+    <button onclick="generate()">Submit</button>
+    <button onclick="resetCompliments()">Reset</button>
+  </div>
+  <div class="output" id="output"></div>
+
+  <script>
+    const compliments = [
+      "You are as cool as polar bear!",
+      "You are as kind as duck!",
+      "You are as cheerful as rabbit!",
+      "You are as clever as cat!",
+      "You are as smart as dog!",
+      "You are as genius as ladybug!",
+      "You are as funny as rhino!",
+      "You are as quick-witted as cow!",
+      "You are as sweet as panda!",
+      "You are as bright as firefly!",
+      "You are as strong as elephant!",
+      "You are as wise as owl!"
+    ];
+
+    const colors = [
+      "gold", "lightpink", "lightcoral", "orange", "limegreen", "deepskyblue", "violet", "deeppink", "aqua", "khaki"
+    ];
+
+    function getRandomColor() {
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    function generate() {
+      const count = parseInt(document.getElementById("count").value);
+      const output = document.getElementById("output");
+      output.innerHTML = "";
+
+      if (!count || count <= 0) {
+        output.innerHTML = "<p>Please enter a valid number.</p>";
+        return;
+      }
+
+      for (let i = 0; i < count; i++) {
+        const compliment = compliments[Math.floor(Math.random() * compliments.length)];
+        const div = document.createElement("div");
+        div.className = "line";
+        div.style.color = getRandomColor();
+        div.textContent = `${compliment}`;
+        output.appendChild(div);
+      }
+    }
+
+    function resetCompliments() {
+      document.getElementById("count").value = "";
+      document.getElementById("output").innerHTML = "";
+    }
+  </script>
+</body>
+</html>

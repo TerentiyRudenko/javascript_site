@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Визначення рівня оцінки</title>
+  <link rel="stylesheet" href="grade.css">
+</head>
+<body>
+  <h1>Визнач свій рівень</h1>
+
+  <input type="number" id="gradeInput" placeholder="Введіть оцінку (1-12)" min="1" max="12">
+  <button onclick="checkGrade()">Визначити рівень</button>
+
+  <p id="result"></p>
+
+  <script>
+    function checkGrade() {
+      const input = document.getElementById("gradeInput");
+      const result = document.getElementById("result");
+      const grade = parseInt(input.value);
+
+      if (isNaN(grade) || grade < 1 || grade > 12) {
+        result.textContent = "Будь ласка, введіть оцінку від 1 до 12.";
+        result.style.color = "red";
+        return;
+      }
+
+      let level = "";
+
+      if (grade >= 1 && grade <= 3) {
+        level = "Початковий рівень";
+      } else if (grade >= 4 && grade <= 6) {
+        level = "Середній рівень";
+      } else if (grade >= 7 && grade <= 9) {
+        level = "Достатній рівень";
+      } else if (grade >= 10 && grade <= 12) {
+        level = "Високий рівень";
+      }
+
+      result.textContent = `Оцінка ${grade} — це ${level}.`;
+      result.style.color = "green";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Обчислення факторіалу</title>
+  <link rel="stylesheet" href="factorial.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Обчислення факторіалу</h1>
+    <input type="number" id="numberInput" placeholder="Введіть число" min="0">
+    <button onclick="calculateFactorial()">Обчислити</button>
+    <p id="calculation"></p>
+    <p id="result"></p>
+  </div>
+
+  <script>
+    function calculateFactorial() {
+      const input = document.getElementById('numberInput');
+      const resultEl = document.getElementById('result');
+      const calcEl = document.getElementById('calculation');
+      let n = parseInt(input.value);
+
+      if (isNaN(n) || n < 0) {
+        resultEl.textContent = '';
+        calcEl.textContent = 'Будь ласка, введіть додатне ціле число.';
+        return;
+      }
+
+      let factorial = 1;
+      let steps = [];
+
+      for (let i = 1; i <= n; i++) {
+        factorial *= i;
+        steps.push(i);
+      }
+
+      calcEl.textContent = `${n}! = ${steps.join(' × ')}`;
+      resultEl.textContent = `= ${factorial}`;
+    }
+  </script>
+</body>
+</html>
