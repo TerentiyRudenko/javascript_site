@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Таблиця множення</title>
+  <link rel="stylesheet" href="css/multiplication-table.css">
+</head>
+<body>
+  <div class="container">
+    <h1>📐 Таблиця множення</h1>
+
+    <input type="number" id="numberInput" placeholder="Введіть число">
+    <button onclick="generateTable()">Показати таблицю</button>
+
+    <div id="tableResult" class="result"></div>
+  </div>
+
+  <script>
+    function generateTable() {
+      const number = parseInt(document.getElementById("numberInput").value);
+      const resultBox = document.getElementById("tableResult");
+
+      if (isNaN(number)) {
+        resultBox.innerHTML = "<p class='error'>❗ Введіть число!</p>";
+        return;
+      }
+
+      let table = `<h2>Таблиця множення для ${number}</h2><ul>`;
+      for (let i = 1; i <= 10; i++) {
+        table += `<li>${number} × ${i} = ${number * i}</li>`;
+      }
+      table += "</ul>";
+      resultBox.innerHTML = table;
+    }
+  </script>
+</body>
+</html>
