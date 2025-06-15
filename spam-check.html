@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Перевірка на спам</title>
+  <link rel="stylesheet" href="css/spam-check.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🛡️ Перевірка на спам</h1>
+    <textarea id="textInput" rows="5" placeholder="Введіть текст для перевірки..."></textarea>
+    <button onclick="checkSpam()">Перевірити</button>
+    <div id="result" class="result-box"></div>
+  </div>
+
+  <script>
+    function checkSpam() {
+      const spamWords = ["безкоштовно", "виграй", "клікни", "подарунок", "гроші", "акція"];
+      const text = document.getElementById("textInput").value.toLowerCase();
+      const resultBox = document.getElementById("result");
+
+      const found = spamWords.filter(word => text.includes(word));
+
+      if (found.length > 0) {
+        resultBox.innerHTML = `🚫 <strong>Виявлено спам:</strong> ${found.join(", ")}`;
+        resultBox.className = "result-box spam";
+      } else {
+        resultBox.innerHTML = `✅ <strong>Текст чистий від спаму.</strong>`;
+        resultBox.className = "result-box clean";
+      }
+    }
+  </script>
+</body>
+</html>
