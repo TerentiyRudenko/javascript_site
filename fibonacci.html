@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Послідовність Фібоначчі</title>
+  <link rel="stylesheet" href="css/fibonacci.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🔢 Послідовність Фібоначчі</h1>
+    <input type="number" id="count" placeholder="Скільки чисел вивести?" min="1">
+    <button onclick="generateFibonacci()">Згенерувати</button>
+    <div id="result" class="result-box"></div>
+  </div>
+
+  <script>
+    function generateFibonacci() {
+      const count = parseInt(document.getElementById("count").value);
+      const resultBox = document.getElementById("result");
+      
+      if (isNaN(count) || count <= 0) {
+        resultBox.innerHTML = "❗ Введіть додатнє число.";
+        resultBox.className = "result-box error";
+        return;
+      }
+
+      const sequence = [];
+      for (let i = 0; i < count; i++) {
+        if (i === 0) sequence.push(0);
+        else if (i === 1) sequence.push(1);
+        else sequence.push(sequence[i - 1] + sequence[i - 2]);
+      }
+
+      resultBox.innerHTML = `🔁 <strong>Результат:</strong><br>${sequence.join(', ')}`;
+      resultBox.className = "result-box";
+    }
+  </script>
+</body>
+</html>
