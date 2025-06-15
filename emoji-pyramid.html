@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Піраміда з емодзі</title>
+  <link rel="stylesheet" href="css/emojii-pyramid.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🧱 Піраміда з емодзі</h1>
+
+    <input type="text" id="emoji" maxlength="2" placeholder="Введіть емодзі">
+    <input type="number" id="height" min="1" max="20" placeholder="Висота (1–20)">
+    <button onclick="buildPyramid()">Побудувати</button>
+
+    <pre id="pyramid" class="pyramid-box"></pre>
+  </div>
+
+  <script>
+    function buildPyramid() {
+      const emoji = document.getElementById("emoji").value.trim();
+      const height = parseInt(document.getElementById("height").value);
+      const output = document.getElementById("pyramid");
+
+      if (!emoji || emoji.length < 1) {
+        output.textContent = "❗ Введіть емодзі.";
+        return;
+      }
+
+      if (isNaN(height) || height < 1 || height > 20) {
+        output.textContent = "❗ Введіть висоту від 1 до 20.";
+        return;
+      }
+
+      let result = "";
+      for (let i = 1; i <= height; i++) {
+        const spaces = " ".repeat(height - i);
+        const blocks = emoji.repeat(i);
+        result += spaces + blocks + "\n";
+      }
+
+      output.textContent = result;
+    }
+  </script>
+</body>
+</html>
