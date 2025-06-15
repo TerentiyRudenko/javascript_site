@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Номер букви в алфавіті</title>
+  <link rel="stylesheet" href="css/letter-position.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🔤 Номер букви в алфавіті</h1>
+
+    <select id="language">
+      <option value="ua">Український алфавіт</option>
+      <option value="en">Англійський алфавіт</option>
+    </select>
+
+    <input type="text" id="letter" maxlength="1" placeholder="Введіть 1 букву">
+    <button onclick="getPosition()">Визначити</button>
+
+    <div id="result" class="result-box"></div>
+  </div>
+
+  <script>
+    const ukrAlphabet = "абвгґдеєжзийіїклмнопрстуфхцчшщьюя".split('');
+    const engAlphabet = "abcdefghijklmnopqrstuvwxyz".split('');
+
+    function getPosition() {
+      const lang = document.getElementById("language").value;
+      const input = document.getElementById("letter").value.toLowerCase();
+      const resultBox = document.getElementById("result");
+
+      if (!input.match(/^[а-яґєіїa-z]$/i)) {
+        resultBox.innerHTML = "❗ Введіть лише одну літеру!";
+        resultBox.className = "result-box error";
+        return;
+      }
+
+      let index;
+      if (lang === "ua") {
+        index = ukrAlphabet.indexOf(input);
+        if (index === -1) {
+          resultBox.innerHTML = "❗ Це не українська літера.";
+          resultBox.className = "result-box error";
+          return;
+        }
+        resultBox.innerHTML = `📍 Літера "<strong>${input}</strong>" — <strong>${index + 1}</strong> у українському алфавіті.`;
+      } else {
+        index = engAlphabet.indexOf(input);
+        if (index === -1) {
+          resultBox.innerHTML = "❗ Це не англійська літера.";
+          resultBox.className = "result-box error";
+          return;
+        }
+        resultBox.innerHTML = `📍 Letter "<strong>${input}</strong>" is number <strong>${index + 1}</strong> in English alphabet.`;
+      }
+
+      resultBox.className = "result-box";
+    }
+  </script>
+</body>
+</html>
